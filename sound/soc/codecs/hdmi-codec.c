@@ -285,6 +285,8 @@ struct hdmi_codec_priv {
 	uint8_t eld[MAX_ELD_BYTES];
 	struct snd_pcm_chmap *chmap_info;
 	unsigned int chmap_idx;
+	struct snd_card *snd_card;
+	struct snd_kcontrol *kctl;
 };
 
 static const struct snd_soc_dapm_widget hdmi_widgets[] = {
@@ -649,7 +651,6 @@ static int hdmi_codec_pcm_new(struct snd_soc_pcm_runtime *rtd,
 {
 	struct snd_soc_dai_driver *drv = dai->driver;
 	struct hdmi_codec_priv *hcp = snd_soc_dai_get_drvdata(dai);
-	struct snd_kcontrol *kctl;
 	struct snd_kcontrol_new hdmi_eld_ctl = {
 		.access	= SNDRV_CTL_ELEM_ACCESS_READ |
 			  SNDRV_CTL_ELEM_ACCESS_VOLATILE,
@@ -678,12 +679,27 @@ static int hdmi_codec_pcm_new(struct snd_soc_pcm_runtime *rtd,
 	hcp->chmap_idx = HDMI_CODEC_CHMAP_IDX_UNKNOWN;
 
 	/* add ELD ctl with the device number corresponding to the PCM stream */
-	kctl = snd_ctl_new1(&hdmi_eld_ctl, dai->component);
-	if (!kctl)
+	hcp->kctl = snd_ctl_new1(&hdmi_eld_ctl, dai->component);
+	if (!hcp->kctl)
 		return -ENOMEM;
 
-	return snd_ctl_add(rtd->card->snd_card, kctl);
+	hcp->snd_card = rtd->card->snd_card;
+
+	return snd_ctl_add(hcp->snd_card, hcp->kctl);
 }
+
+void hdmi_codec_eld_notify(struct device *dev)
+{
+	struct hdmi_codec_priv *hcp = dev_get_drvdata(dev);
+	struct snd_ctl_elem_id id;
+
+	if (!hcp->snd_card || !hcp->kctl)
+		return;
+
+	id = hcp->kctl->id;
+	snd_ctl_notify(hcp->snd_card, SNDRV_CTL_EVENT_MASK_VALUE, &id);
+}
+EXPORT_SYMBOL_GPL(hdmi_codec_eld_notify);
 
 static int hdmi_dai_probe(struct snd_soc_dai *dai)
 {
