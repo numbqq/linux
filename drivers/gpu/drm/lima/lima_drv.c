@@ -3,7 +3,10 @@
 
 #include <linux/module.h>
 #include <linux/of_platform.h>
-#include <linux/log2.h>
+#include <linux/uaccess.h>
+#include <linux/slab.h>
+#include <drm/drm_ioctl.h>
+#include <drm/drm_drv.h>
 #include <drm/drm_prime.h>
 #include <drm/lima_drm.h>
 

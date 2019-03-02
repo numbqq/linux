@@ -4,7 +4,7 @@
 #ifndef __LIMA_DRV_H__
 #define __LIMA_DRV_H__
 
-#include <drm/drmP.h>
+#include <drm/drm_file.h>
 
 #include "lima_ctx.h"
 
