@@ -10,14 +10,21 @@
 extern "C" {
 #endif
 
-#define LIMA_INFO_GPU_MALI400 0x00
-#define LIMA_INFO_GPU_MALI450 0x01
+enum drm_lima_param_gpu_id {
+	DRM_LIMA_PARAM_GPU_ID_UNKNOWN,
+	DRM_LIMA_PARAM_GPU_ID_MALI400,
+	DRM_LIMA_PARAM_GPU_ID_MALI450,
+};
 
-struct drm_lima_info {
-	__u32 gpu_id;   /* out */
-	__u32 num_pp;   /* out */
-	__u32 valid;    /* out */
-	__u32 _resv[7];
+enum drm_lima_param {
+	DRM_LIMA_PARAM_GPU_ID,
+	DRM_LIMA_PARAM_NUM_PP,
+};
+
+struct drm_lima_get_param {
+	__u32 param; /* in */
+	__u32 pad;
+	__u64 value; /* out */
 };
 
 struct drm_lima_gem_create {
@@ -105,14 +112,14 @@ struct drm_lima_ctx {
 	__u32 id;          /* in/out */
 };
 
-#define DRM_LIMA_INFO        0x00
+#define DRM_LIMA_GET_PARAM   0x00
 #define DRM_LIMA_GEM_CREATE  0x01
 #define DRM_LIMA_GEM_INFO    0x02
 #define DRM_LIMA_GEM_SUBMIT  0x03
 #define DRM_LIMA_GEM_WAIT    0x04
 #define DRM_LIMA_CTX         0x05
 
-#define DRM_IOCTL_LIMA_INFO DRM_IOR(DRM_COMMAND_BASE + DRM_LIMA_INFO, struct drm_lima_info)
+#define DRM_IOCTL_LIMA_GET_PARAM DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GET_PARAM, struct drm_lima_get_param)
 #define DRM_IOCTL_LIMA_GEM_CREATE DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GEM_CREATE, struct drm_lima_gem_create)
 #define DRM_IOCTL_LIMA_GEM_INFO DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GEM_INFO, struct drm_lima_gem_info)
 #define DRM_IOCTL_LIMA_GEM_SUBMIT DRM_IOW(DRM_COMMAND_BASE + DRM_LIMA_GEM_SUBMIT, struct drm_lima_gem_submit)
