@@ -159,18 +159,21 @@ static int lima_ioctl_gem_wait(struct drm_device *dev, void *data, struct drm_fi
 	return lima_gem_wait(file, args->handle, args->op, args->timeout_ns);
 }
 
-static int lima_ioctl_ctx(struct drm_device *dev, void *data, struct drm_file *file)
+static int lima_ioctl_ctx_create(struct drm_device *dev, void *data, struct drm_file *file)
 {
-	struct drm_lima_ctx *args = data;
+	struct drm_lima_ctx_create *args = data;
 	struct lima_drm_priv *priv = file->driver_priv;
 	struct lima_device *ldev = to_lima_dev(dev);
 
-	if (args->op == LIMA_CTX_OP_CREATE)
-		return lima_ctx_create(ldev, &priv->ctx_mgr, &args->id);
-	else if (args->op == LIMA_CTX_OP_FREE)
-		return lima_ctx_free(&priv->ctx_mgr, args->id);
+	return lima_ctx_create(ldev, &priv->ctx_mgr, &args->id);
+}
 
-	return -EINVAL;
+static int lima_ioctl_ctx_free(struct drm_device *dev, void *data, struct drm_file *file)
+{
+	struct drm_lima_ctx_create *args = data;
+	struct lima_drm_priv *priv = file->driver_priv;
+
+	return lima_ctx_free(&priv->ctx_mgr, args->id);
 }
 
 static int lima_drm_driver_open(struct drm_device *dev, struct drm_file *file)
@@ -214,7 +217,8 @@ static const struct drm_ioctl_desc lima_drm_driver_ioctls[] = {
 	DRM_IOCTL_DEF_DRV(LIMA_GEM_INFO, lima_ioctl_gem_info, DRM_AUTH|DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(LIMA_GEM_SUBMIT, lima_ioctl_gem_submit, DRM_AUTH|DRM_RENDER_ALLOW),
 	DRM_IOCTL_DEF_DRV(LIMA_GEM_WAIT, lima_ioctl_gem_wait, DRM_AUTH|DRM_RENDER_ALLOW),
-	DRM_IOCTL_DEF_DRV(LIMA_CTX, lima_ioctl_ctx, DRM_AUTH|DRM_RENDER_ALLOW),
+	DRM_IOCTL_DEF_DRV(LIMA_CTX_CREATE, lima_ioctl_ctx_create, DRM_AUTH|DRM_RENDER_ALLOW),
+	DRM_IOCTL_DEF_DRV(LIMA_CTX_FREE, lima_ioctl_ctx_free, DRM_AUTH|DRM_RENDER_ALLOW),
 };
 
 static const struct file_operations lima_drm_driver_fops = {

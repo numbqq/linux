@@ -104,12 +104,14 @@ struct drm_lima_gem_wait {
 	__s64 timeout_ns;  /* in */
 };
 
-#define LIMA_CTX_OP_CREATE 1
-#define LIMA_CTX_OP_FREE   2
+struct drm_lima_ctx_create {
+	__u32 id;          /* out */
+	__u32 _pad;
+};
 
-struct drm_lima_ctx {
-	__u32 op;          /* in */
-	__u32 id;          /* in/out */
+struct drm_lima_ctx_free {
+	__u32 id;          /* in */
+	__u32 _pad;
 };
 
 #define DRM_LIMA_GET_PARAM   0x00
@@ -117,14 +119,16 @@ struct drm_lima_ctx {
 #define DRM_LIMA_GEM_INFO    0x02
 #define DRM_LIMA_GEM_SUBMIT  0x03
 #define DRM_LIMA_GEM_WAIT    0x04
-#define DRM_LIMA_CTX         0x05
+#define DRM_LIMA_CTX_CREATE  0x05
+#define DRM_LIMA_CTX_FREE    0x06
 
 #define DRM_IOCTL_LIMA_GET_PARAM DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GET_PARAM, struct drm_lima_get_param)
 #define DRM_IOCTL_LIMA_GEM_CREATE DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GEM_CREATE, struct drm_lima_gem_create)
 #define DRM_IOCTL_LIMA_GEM_INFO DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_GEM_INFO, struct drm_lima_gem_info)
 #define DRM_IOCTL_LIMA_GEM_SUBMIT DRM_IOW(DRM_COMMAND_BASE + DRM_LIMA_GEM_SUBMIT, struct drm_lima_gem_submit)
 #define DRM_IOCTL_LIMA_GEM_WAIT DRM_IOW(DRM_COMMAND_BASE + DRM_LIMA_GEM_WAIT, struct drm_lima_gem_wait)
-#define DRM_IOCTL_LIMA_CTX DRM_IOWR(DRM_COMMAND_BASE + DRM_LIMA_CTX, struct drm_lima_ctx)
+#define DRM_IOCTL_LIMA_CTX_CREATE DRM_IOR(DRM_COMMAND_BASE + DRM_LIMA_CTX_CREATE, struct drm_lima_ctx_create)
+#define DRM_IOCTL_LIMA_CTX_FREE DRM_IOW(DRM_COMMAND_BASE + DRM_LIMA_CTX_FREE, struct drm_lima_ctx_free)
 
 #if defined(__cplusplus)
 }
