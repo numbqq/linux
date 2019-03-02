@@ -9,7 +9,6 @@
 #include "lima_ctx.h"
 
 extern int lima_sched_timeout_ms;
-extern int lima_sched_max_tasks;
 
 struct lima_vm;
 struct lima_bo;
