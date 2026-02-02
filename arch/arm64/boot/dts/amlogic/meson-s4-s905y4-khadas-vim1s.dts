@@ -42,6 +42,15 @@
 		};
 	};
 
+	/* 896 MiB cma for video decoding */
+	linux,cma {
+		compatible = "shared-dma-pool";
+		reusable;
+		size = <0x0 0x38000000>;
+		alignment = <0x0 0x400000>;
+		linux,cma-default;
+	};
+
 	adc-keys {
 		compatible = "adc-keys";
 		io-channels = <&saradc 0>;
@@ -155,6 +164,13 @@
 		enable-active-high;
 		regulator-boot-on;
 		regulator-always-on;
+	};
+
+	vdd_gpu: regulator-vdd-gpu {
+		compatible = "regulator-fixed";
+		regulator-name = "vdd-gpu";
+		regulator-min-microvolt = <800000>;
+		regulator-max-microvolt = <800000>;
 	};
 
 	/* SY8120B1ABC DC/DC Regulator. */
@@ -613,4 +629,9 @@
 	portnum = <2>;
 	gpio-vbus-power = "GPIOH_6";
 	gpios = <&gpio GPIOH_6 GPIO_ACTIVE_HIGH>;
+};
+
+&gpu {
+	mali-supply = <&vdd_gpu>;
+	status = "okay";
 };
