@@ -165,11 +165,6 @@
 				#address-cells = <2>;
 				#size-cells = <2>;
 				ranges = <0x0 0x0 0x0 0x36000 0x0 0x2000>;
-
-				canvas: video-lut@48 {
-					compatible = "amlogic,canvas";
-					reg = <0x0 0x48 0x0 0x14>;
-				};
 			};
 
 			hdmi_tx: hdmi-tx@300000 {
