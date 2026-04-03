@@ -12,8 +12,13 @@ maintainers:
 
 properties:
   compatible:
-    enum:
-      - amlogic,g12a-usb3-pcie-phy
+    oneOf:
+      - items:
+          - enum:
+              - amlogic,t7-usb3-phy
+          - const: amlogic,g12a-usb3-pcie-phy
+      - enum:
+          - amlogic,g12a-usb3-pcie-phy
 
   reg:
     maxItems: 1
