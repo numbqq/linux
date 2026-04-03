@@ -12,9 +12,14 @@ maintainers:
 
 properties:
   compatible:
-    enum:
-      - amlogic,g12a-usb2-phy
-      - amlogic,a1-usb2-phy
+    oneOf:
+      - items:
+          - enum:
+              - amlogic,t7-usb2-phy
+          - const: amlogic,g12a-usb2-phy
+      - enum:
+          - amlogic,g12a-usb2-phy
+          - amlogic,a1-usb2-phy
 
   reg:
     maxItems: 1
