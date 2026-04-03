@@ -368,3 +368,19 @@
 		};
 	};
 };
+
+&usb_comb {
+	status = "okay";
+};
+
+&usb2_phy0 {
+	phy-supply = <&vcc5v0_usb>;
+};
+
+&usb2_phy1 {
+	phy-supply = <&vcc5v0_usb>;
+};
+
+&usb3_phy {
+	phy-supply = <&vddao_1v8>;
+};
