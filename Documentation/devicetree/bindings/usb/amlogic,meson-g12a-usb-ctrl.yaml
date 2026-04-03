@@ -29,12 +29,17 @@ description: |
 
 properties:
   compatible:
-    enum:
-      - amlogic,meson-gxl-usb-ctrl
-      - amlogic,meson-gxm-usb-ctrl
-      - amlogic,meson-axg-usb-ctrl
-      - amlogic,meson-g12a-usb-ctrl
-      - amlogic,meson-a1-usb-ctrl
+    oneOf:
+      - items:
+          - enum:
+              - amlogic,t7-usb-ctrl
+          - const: amlogic,meson-g12a-usb-ctrl
+      - enum:
+          - amlogic,meson-gxl-usb-ctrl
+          - amlogic,meson-gxm-usb-ctrl
+          - amlogic,meson-axg-usb-ctrl
+          - amlogic,meson-g12a-usb-ctrl
+          - amlogic,meson-a1-usb-ctrl
 
   ranges: true
 
@@ -82,6 +87,7 @@ patternProperties:
     oneOf:
       - $ref: dwc2.yaml#
       - $ref: snps,dwc3.yaml#
+      - $ref: generic-xhci.yaml#
 
 additionalProperties: false
 
