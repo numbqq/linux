@@ -34,6 +34,9 @@ properties:
         enum:
           - brcm,xhci-brcm-v2
           - brcm,bcm7445-xhci
+      - description: Amlogic SoCs with xHCI
+        enum:
+          - amlogic,t7-xhci
       - description: Generic xHCI device
         const: xhci-platform
         deprecated: true
