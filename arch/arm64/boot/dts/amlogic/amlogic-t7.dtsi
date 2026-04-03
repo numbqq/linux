@@ -10,6 +10,7 @@
 #include <dt-bindings/clock/amlogic,t7-pll-clkc.h>
 #include <dt-bindings/clock/amlogic,t7-peripherals-clkc.h>
 #include <dt-bindings/thermal/thermal.h>
+#include <dt-bindings/phy/phy.h>
 
 / {
 	interrupt-parent = <&gic>;
@@ -262,7 +263,8 @@
 			reg = <0x0 0xfe000000 0x0 0x480000>;
 			#address-cells = <2>;
 			#size-cells = <2>;
-			ranges = <0x0 0x0 0x0 0xfe000000 0x0 0x480000>;
+			ranges = <0x0 0x0 0x0 0xfe000000 0x0 0x480000>,
+				 <0x0 0xfdd00000 0x0 0xfdd00000 0x0 0x200000>; /* usb drd */
 
 			clkc_periphs: clock-controller@0 {
 				compatible = "amlogic,t7-peripherals-clkc";
@@ -580,6 +582,42 @@
 				#interrupt-cells = <2>;
 				amlogic,channel-interrupts =
 					<10 11 12 13 14 15 16 17 18 19 20 21>;
+			};
+
+			usb_comb: usb@3a000 {
+				compatible = "amlogic,t7-usb-ctrl", "amlogic,meson-g12a-usb-ctrl";
+				reg = <0x0 0x3a000 0x0 0xa0>;
+				interrupts = <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
+				#address-cells = <2>;
+				#size-cells = <2>;
+				ranges = <0x0 0xfdd00000 0x0 0xfdd00000 0x0 0x200000>;
+
+				clocks = <&clkc_periphs CLKID_SYS_USB>;
+				resets = <&reset RESET_USB>;
+				power-domains = <&pwrc PWRC_T7_USB_COMB_ID>;
+
+				dr_mode = "otg";
+
+				phys = <&usb2_phy0>, <&usb2_phy1>, <&usb3_phy PHY_TYPE_USB3>;
+				phy-names = "usb2-phy0", "usb2-phy1", "usb3-phy0";
+
+				status = "disabled";
+
+				usb2_drd: usb@fdd00000 {
+					compatible = "amlogic,t7-xhci";
+					reg = <0x0 0xfdd00000 0x0 0x100000>;
+					interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
+					clocks = <&clkc_periphs CLKID_SYS_USB>;
+					clock-names = "core";
+				};
+
+				usb3_drd: usb@fde00000 {
+					compatible = "amlogic,t7-xhci";
+					reg = <0x0 0xfde00000 0x0 0x100000>;
+					interrupts = <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>;
+					clocks = <&clkc_periphs CLKID_SYS_USB>;
+					clock-names = "core";
+				};
 			};
 
 			usb2_phy0: phy@3c000 {
