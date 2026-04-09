@@ -142,6 +142,7 @@ properties:
     contains:
       enum:
         - snps,dwmac-3.70a
+        - snps,dwmac-4.00
         - snps,dwmac
 
   reg:
