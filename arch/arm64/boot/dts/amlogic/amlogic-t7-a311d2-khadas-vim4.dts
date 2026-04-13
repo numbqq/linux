@@ -157,6 +157,103 @@
 		clock-frequency = <32768>;
 			pwms = <&pwm_ab 0 30518 0>;
 	};
+
+	vddcpua: regulator-vddcpu-a {
+		compatible = "pwm-regulator";
+		regulator-name = "VDDCPU_A";
+		regulator-min-microvolt = <689000>;
+		regulator-max-microvolt = <1049000>;
+		pwms = <&pwm_ao_cd 1 1500 0>;
+		max-duty-cycle = <1500>;
+		voltage-table = <1049000 0>,
+				<1039000 3>,
+				<1029000 6>,
+				<1019000 9>,
+				<1009000 12>,
+				<999000 14>,
+				<989000 17>,
+				<979000 20>,
+				<969000 23>,
+				<959000 26>,
+				<949000 29>,
+				<939000 31>,
+				<929000 34>,
+				<919000 37>,
+				<909000 40>,
+				<899000 43>,
+				<889000 45>,
+				<879000 48>,
+				<869000 51>,
+				<859000 54>,
+				<849000 56>,
+				<839000 59>,
+				<829000 62>,
+				<819000 65>,
+				<809000 68>,
+				<799000 70>,
+				<789000 73>,
+				<779000 76>,
+				<769000 79>,
+				<759000 81>,
+				<749000 84>,
+				<739000 87>,
+				<729000 89>,
+				<719000 92>,
+				<709000 95>,
+				<699000 98>,
+				<689000 100>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	vddcpub: regulator-vddcpu-b {
+		compatible = "pwm-regulator";
+		regulator-name = "VDDCPU_B";
+		regulator-min-microvolt = <689000>;
+		regulator-max-microvolt = <1049000>;
+		pwms = <&pwm_ao_ab 1 1500 0>;
+		max-duty-cycle = <1500>;
+		voltage-table = <1049000 0>,
+				<1039000 3>,
+				<1029000 6>,
+				<1019000 9>,
+				<1009000 12>,
+				<999000 14>,
+				<989000 17>,
+				<979000 20>,
+				<969000 23>,
+				<959000 26>,
+				<949000 29>,
+				<939000 31>,
+				<929000 34>,
+				<919000 37>,
+				<909000 40>,
+				<899000 43>,
+				<889000 45>,
+				<879000 48>,
+				<869000 51>,
+				<859000 54>,
+				<849000 56>,
+				<839000 59>,
+				<829000 62>,
+				<819000 65>,
+				<809000 68>,
+				<799000 70>,
+				<789000 73>,
+				<779000 76>,
+				<769000 79>,
+				<759000 81>,
+				<749000 84>,
+				<739000 87>,
+				<729000 89>,
+				<719000 92>,
+				<709000 95>,
+				<699000 98>,
+				<689000 100>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
 };
 
 &a53_thermal {
@@ -246,6 +343,46 @@
 	amlogic,tx-delay-ns = <2>;
 };
 
+&cpu0 {
+	cpu-supply = <&vddcpua>;
+	operating-points-v2 = <&a73_opp_table>;
+};
+
+&cpu1 {
+	cpu-supply = <&vddcpua>;
+	operating-points-v2 = <&a73_opp_table>;
+};
+
+&cpu2 {
+	cpu-supply = <&vddcpua>;
+	operating-points-v2 = <&a73_opp_table>;
+};
+
+&cpu3 {
+	cpu-supply = <&vddcpua>;
+	operating-points-v2 = <&a73_opp_table>;
+};
+
+&cpu100 {
+	cpu-supply = <&vddcpub>;
+	operating-points-v2 = <&a53_opp_table>;
+};
+
+&cpu101 {
+	cpu-supply = <&vddcpub>;
+	operating-points-v2 = <&a53_opp_table>;
+};
+
+&cpu102 {
+	cpu-supply = <&vddcpub>;
+	operating-points-v2 = <&a53_opp_table>;
+};
+
+&cpu103 {
+	cpu-supply = <&vddcpub>;
+	operating-points-v2 = <&a53_opp_table>;
+};
+
 &i2c_m_ao_a {
 	status = "okay";
 	pinctrl-0 = <&i2c0_ao_d_pins>;
@@ -285,6 +422,16 @@
 &pwm_ab {
 	status = "okay";
 	pinctrl-0 = <&pwm_a_pins>;
+	pinctrl-names = "default";
+};
+
+&pwm_ao_ab {
+	status = "okay";
+};
+
+&pwm_ao_cd {
+	status = "okay";
+	pinctrl-0 = <&pwm_ao_d_pins>;
 	pinctrl-names = "default";
 };
 

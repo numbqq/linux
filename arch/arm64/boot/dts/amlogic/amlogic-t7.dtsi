@@ -24,21 +24,6 @@
 		cpu-map {
 			cluster0 {
 				core0 {
-					cpu = <&cpu100>;
-				};
-				core1 {
-					cpu = <&cpu101>;
-				};
-				core2 {
-					cpu = <&cpu102>;
-				};
-				core3 {
-					cpu = <&cpu103>;
-				};
-			};
-
-			cluster1 {
-				core0 {
 					cpu = <&cpu0>;
 				};
 				core1 {
@@ -51,66 +36,21 @@
 					cpu = <&cpu3>;
 				};
 			};
-		};
 
-		cpu100: cpu@100 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53";
-			reg = <0x0 0x100>;
-			enable-method = "psci";
-			d-cache-line-size = <32>;
-			d-cache-size = <0x8000>;
-			d-cache-sets = <32>;
-			i-cache-line-size = <32>;
-			i-cache-size = <0x8000>;
-			i-cache-sets = <32>;
-			next-level-cache = <&l2_cache_l>;
-			#cooling-cells = <2>;
-		};
-
-		cpu101: cpu@101 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53";
-			reg = <0x0 0x101>;
-			enable-method = "psci";
-			d-cache-line-size = <32>;
-			d-cache-size = <0x8000>;
-			d-cache-sets = <32>;
-			i-cache-line-size = <32>;
-			i-cache-size = <0x8000>;
-			i-cache-sets = <32>;
-			next-level-cache = <&l2_cache_l>;
-			#cooling-cells = <2>;
-		};
-
-		cpu102: cpu@102 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53";
-			reg = <0x0 0x102>;
-			enable-method = "psci";
-			d-cache-line-size = <32>;
-			d-cache-size = <0x8000>;
-			d-cache-sets = <32>;
-			i-cache-line-size = <32>;
-			i-cache-size = <0x8000>;
-			i-cache-sets = <32>;
-			next-level-cache = <&l2_cache_l>;
-			#cooling-cells = <2>;
-		};
-
-		cpu103: cpu@103 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53";
-			reg = <0x0 0x103>;
-			enable-method = "psci";
-			d-cache-line-size = <32>;
-			d-cache-size = <0x8000>;
-			d-cache-sets = <32>;
-			i-cache-line-size = <32>;
-			i-cache-size = <0x8000>;
-			i-cache-sets = <32>;
-			next-level-cache = <&l2_cache_l>;
-			#cooling-cells = <2>;
+			cluster1 {
+				core0 {
+					cpu = <&cpu100>;
+				};
+				core1 {
+					cpu = <&cpu101>;
+				};
+				core2 {
+					cpu = <&cpu102>;
+				};
+				core3 {
+					cpu = <&cpu103>;
+				};
+			};
 		};
 
 		cpu0: cpu@0 {
@@ -118,6 +58,11 @@
 			compatible = "arm,cortex-a73";
 			reg = <0x0 0x0>;
 			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_A73_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <550>;
 			d-cache-line-size = <64>;
 			d-cache-size = <0x10000>;
 			d-cache-sets = <64>;
@@ -133,6 +78,11 @@
 			compatible = "arm,cortex-a73";
 			reg = <0x0 0x1>;
 			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_A73_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <550>;
 			d-cache-line-size = <64>;
 			d-cache-size = <0x10000>;
 			d-cache-sets = <64>;
@@ -148,6 +98,11 @@
 			compatible = "arm,cortex-a73";
 			reg = <0x0 0x2>;
 			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_A73_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <550>;
 			d-cache-line-size = <64>;
 			d-cache-size = <0x10000>;
 			d-cache-sets = <64>;
@@ -163,6 +118,11 @@
 			compatible = "arm,cortex-a73";
 			reg = <0x0 0x3>;
 			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_A73_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <550>;
 			d-cache-line-size = <64>;
 			d-cache-size = <0x10000>;
 			d-cache-sets = <64>;
@@ -170,6 +130,86 @@
 			i-cache-size = <0x10000>;
 			i-cache-sets = <64>;
 			next-level-cache = <&l2_cache_b>;
+			#cooling-cells = <2>;
+		};
+
+		cpu100: cpu@100 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x100>;
+			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_CPU_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <632>;
+			dynamic-power-coefficient = <110>;
+			d-cache-line-size = <32>;
+			d-cache-size = <0x8000>;
+			d-cache-sets = <32>;
+			i-cache-line-size = <32>;
+			i-cache-size = <0x8000>;
+			i-cache-sets = <32>;
+			next-level-cache = <&l2_cache_l>;
+			#cooling-cells = <2>;
+		};
+
+		cpu101: cpu@101 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x101>;
+			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_CPU_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <632>;
+			dynamic-power-coefficient = <110>;
+			d-cache-line-size = <32>;
+			d-cache-size = <0x8000>;
+			d-cache-sets = <32>;
+			i-cache-line-size = <32>;
+			i-cache-size = <0x8000>;
+			i-cache-sets = <32>;
+			next-level-cache = <&l2_cache_l>;
+			#cooling-cells = <2>;
+		};
+
+		cpu102: cpu@102 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x102>;
+			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_CPU_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <632>;
+			dynamic-power-coefficient = <110>;
+			d-cache-line-size = <32>;
+			d-cache-size = <0x8000>;
+			d-cache-sets = <32>;
+			i-cache-line-size = <32>;
+			i-cache-size = <0x8000>;
+			i-cache-sets = <32>;
+			next-level-cache = <&l2_cache_l>;
+			#cooling-cells = <2>;
+		};
+
+		cpu103: cpu@103 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0 0x103>;
+			enable-method = "psci";
+			clocks = <&scmi_clk CLKID_CPU_CLK>;
+			voltage-tolerance = <0>;
+			clock-latency = <50000>;
+			capacity-dmips-mhz = <632>;
+			dynamic-power-coefficient = <110>;
+			d-cache-line-size = <32>;
+			d-cache-size = <0x8000>;
+			d-cache-sets = <32>;
+			i-cache-line-size = <32>;
+			i-cache-size = <0x8000>;
+			i-cache-sets = <32>;
+			next-level-cache = <&l2_cache_l>;
 			#cooling-cells = <2>;
 		};
 
@@ -239,6 +279,131 @@
 				reg = <0x14>;
 				#clock-cells = <1>;
 			};
+		};
+	};
+
+	a73_opp_table: opp-table-a73 {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-500000000 {
+			opp-hz = /bits/ 64 <500000000>;
+			opp-microvolt = <819000>;
+		};
+
+		opp-666666666 {
+			opp-hz = /bits/ 64 <666666666>;
+			opp-microvolt = <819000>;
+		};
+
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <819000>;
+		};
+
+		opp-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+			opp-microvolt = <819000>;
+		};
+
+		opp-1392000000 {
+			opp-hz = /bits/ 64 <1392000000>;
+			opp-microvolt = <819000>;
+		};
+
+		opp-1512000000 {
+			opp-hz = /bits/ 64 <1512000000>;
+			opp-microvolt = <829000>;
+		};
+
+		opp-1608000000 {
+			opp-hz = /bits/ 64 <1608000000>;
+			opp-microvolt = <849000>;
+		};
+
+		opp-1704000000 {
+			opp-hz = /bits/ 64 <1704000000>;
+			opp-microvolt = <869000>;
+		};
+
+		opp-1800000000 {
+			opp-hz = /bits/ 64 <1800000000>;
+			opp-microvolt = <909000>;
+		};
+
+		opp-1896000000 {
+			opp-hz = /bits/ 64 <1896000000>;
+			opp-microvolt = <939000>;
+		};
+
+		opp-2016000000 {
+			opp-hz = /bits/ 64 <2016000000>;
+			opp-microvolt = <959000>;
+		};
+
+		opp-2208000000 {
+			opp-hz = /bits/ 64 <2208000000>;
+			opp-microvolt = <1009000>;
+		};
+	};
+
+	a53_opp_table: opp-table-a53 {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-500000000 {
+			opp-hz = /bits/ 64 <500000000>;
+			opp-microvolt = <769000>;
+		};
+
+		opp-666666666 {
+			opp-hz = /bits/ 64 <666666666>;
+			opp-microvolt = <769000>;
+		};
+
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <769000>;
+		};
+
+		opp-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+			opp-microvolt = <769000>;
+		};
+
+		opp-1392000000 {
+			opp-hz = /bits/ 64 <1392000000>;
+			opp-microvolt = <769000>;
+		};
+
+		opp-1512000000 {
+			opp-hz = /bits/ 64 <1512000000>;
+			opp-microvolt = <809000>;
+		};
+
+		opp-1608000000 {
+			opp-hz = /bits/ 64 <1608000000>;
+			opp-microvolt = <839000>;
+		};
+
+		opp-1704000000 {
+			opp-hz = /bits/ 64 <1704000000>;
+			opp-microvolt = <869000>;
+		};
+
+		opp-1800000000 {
+			opp-hz = /bits/ 64 <1800000000>;
+			opp-microvolt = <909000>;
+		};
+
+		opp-1896000000 {
+			opp-hz = /bits/ 64 <1896000000>;
+			opp-microvolt = <949000>;
+		};
+
+		opp-2016000000 {
+			opp-hz = /bits/ 64 <2016000000>;
+			opp-microvolt = <1009000>;
 		};
 	};
 
