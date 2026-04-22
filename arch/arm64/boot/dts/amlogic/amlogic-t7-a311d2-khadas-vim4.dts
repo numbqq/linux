@@ -45,6 +45,14 @@
 			reg = <0x0 0x05300000 0x0 0x2000000>;
 			no-map;
 		};
+
+		/* 16 MiB reserved for PCIe BL31 memory-protection via SMC */
+		pcie_dma_pool: pcie-dma-pool {
+			compatible = "restricted-dma-pool";
+			size = <0x0 0x1000000>;
+			alignment = <0x0 0x400000>;
+			alloc-ranges = <0x0 0x0 0x0 0xe0000000>;
+		};
 	};
 
 	xtal: xtal-clk {
@@ -417,6 +425,12 @@
 			cooling-device = <&khadas_mcu 30 100>;
 		};
 	};
+};
+
+&pcieA {
+	status = "okay";
+	memory-region = <&pcie_dma_pool>;
+	reset-gpios = <&gpio GPIOH_3 GPIO_ACTIVE_LOW>;
 };
 
 &pwm_ab {
