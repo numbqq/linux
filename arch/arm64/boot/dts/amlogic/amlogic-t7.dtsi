@@ -975,6 +975,18 @@
 				amlogic,secure-monitor = <&sm 2>;
 			};
 
+			pcie_phy: phy@2a000 {
+				compatible = "amlogic,t7-pcie-phy", "amlogic,g12a-usb3-pcie-phy";
+				reg = <0x0 0x2a000 0x0 0x2000>;
+				clocks = <&pcie CLKID_PCIE_PLL>;
+				clock-names = "ref_clk";
+				resets = <&reset RESET_PCIE_PHY>;
+				reset-names = "phy";
+				assigned-clocks = <&pcie CLKID_PCIE_PLL>;
+				assigned-clock-rates = <100000000>;
+				#phy-cells = <1>;
+			};
+
 			pwm_ao_ef: pwm@30000 {
 				compatible = "amlogic,t7-pwm", "amlogic,meson-s4-pwm";
 				reg = <0x0 0x30000 0x0 0x24>;
