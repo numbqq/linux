@@ -24,6 +24,7 @@ select:
         enum:
           - amlogic,axg-pcie
           - amlogic,g12a-pcie
+          - amlogic,t7-pcie
   required:
     - compatible
 
@@ -33,6 +34,7 @@ properties:
       - enum:
           - amlogic,axg-pcie
           - amlogic,g12a-pcie
+          - amlogic,t7-pcie
       - const: snps,dw-pcie
 
   reg:
@@ -84,6 +86,13 @@ properties:
   power-domains:
     maxItems: 1
 
+  memory-region:
+    maxItems: 1
+    description: |
+      phandle to a restricted DMA pool to be used for all devices behind
+      this controller. The regions should be defined according to
+      reserved-memory/shared-dma-pool.yaml.
+
 required:
   - compatible
   - reg
@@ -104,6 +113,18 @@ required:
   - phy-names
   - resets
   - reset-names
+
+if:
+  properties:
+    compatible:
+      contains:
+        const: amlogic,t7-pcie
+then:
+  required:
+    - memory-region
+else:
+  properties:
+    memory-region: false
 
 unevaluatedProperties: false
 
